@@ -4,20 +4,20 @@ using System.Collections.Generic;
 public class MartLayoutManager : MonoBehaviour
 {
     [Header("진열대 종류")]
-    public GameObject[] shelfPrefabs; // 다양한 진열대 프리팹들
+    public GameObject[] shelfPrefabs; // 다양한 크기의 진열대 프리팹들
 
-    [Header("배치 지점")]
-    public Transform[] gridPoints;    // 마트 바닥에 미리 깔아둔 Empty Object들
+    [Header("마트 격자(Grid) 설정")]
+    public int columns = 6;
+    public int rows = 8;
+    public Vector2 gridSpacing = new Vector2(5f, 7f); // 격자 간격
 
     [Header("겹침 체크 설정")]
     public LayerMask obstructionLayer; // "Shelf" 레이어 선택
-    public Vector3 shelfSize = new Vector3(2f, 2f, 4f); // 진열대의 평균 크기
 
     private List<GameObject> currentShelves = new List<GameObject>();
 
     void Update()
     {
-        // G 키를 누르면 구조 변경
         if (Input.GetKeyDown(KeyCode.G))
         {
             ChangeLayout();
@@ -26,63 +26,115 @@ public class MartLayoutManager : MonoBehaviour
 
     public void ChangeLayout()
     {
-        // 1. 기존 진열대 제거
+        // 1. 기존 진열대 완전히 제거
         foreach (GameObject shelf in currentShelves)
         {
             if (shelf != null) Destroy(shelf);
         }
         currentShelves.Clear();
 
-        // 2. 새로운 구조 배치
-        foreach (Transform point in gridPoints)
+        // 2. 마트 중심 기준 격자 시작점 계산
+        Vector3 startPosition = GetGridStartPosition();
+
+        // 3. 격자 배치 시작
+        for (int x = 0; x < columns; x++)
         {
-            // 어떤 진열대를 세울지 랜덤 선택
-            int randomIndex = Random.Range(0, shelfPrefabs.Length);
-
-            // 0도 또는 90도 랜덤 회전 (통로 방향 결정)
-            float[] rotations = { 0f, 90f };
-            float randomRot = rotations[Random.Range(0, rotations.Length)];
-            Quaternion shelfRotation = Quaternion.Euler(0, randomRot, 0);
-
-            // 💡 겹침 체크 박스 크기 계산
-            Vector3 halfExtents = shelfSize * 0.5f;
-
-            // 회전값에 따라 체크 박스의 가로/세로를 스왑
-            if (Mathf.Approximately(randomRot, 90f))
+            for (int z = 0; z < rows; z++)
             {
-                halfExtents = new Vector3(halfExtents.z, halfExtents.y, halfExtents.x);
-            }
+                Vector3 spawnPos = startPosition + new Vector3(x * gridSpacing.x, 0f, z * gridSpacing.y);
 
-            // 💡 [핵심] 해당 지점이 비어있는지 확인
-            // 이미 다른 진열대가 이 공간을 침범했다면 생성하지 않음
-            bool isOverlap = Physics.CheckBox(point.position, halfExtents, shelfRotation, obstructionLayer);
+                if (shelfPrefabs == null || shelfPrefabs.Length == 0) return;
 
-            if (!isOverlap)
-            {
-                GameObject newShelf = Instantiate(shelfPrefabs[randomIndex], point.position, shelfRotation);
+                // 어떤 진열대를 세울지 랜덤 선택
+                int randomIndex = Random.Range(0, shelfPrefabs.Length);
+                GameObject selectedPrefab = shelfPrefabs[randomIndex];
 
-                // 생성된 진열대의 레이어를 설정 (체크에 감지되도록)
-                newShelf.layer = LayerMask.NameToLayer("Shelf");
+                BoxCollider prefabCollider = selectedPrefab.GetComponent<BoxCollider>();
+                if (prefabCollider == null) continue;
 
-                currentShelves.Add(newShelf);
-            }
-            else
-            {
-                Debug.Log($"{point.name} 위치는 공간 부족으로 건너뜁니다.");
+                // 실제 절반 크기(halfExtents) 구하기
+                Vector3 halfExtents = GetPrefabHalfExtents(selectedPrefab, prefabCollider);
+
+                // 0도 또는 90도 랜덤 회전
+                float[] rotations = { 0f, 90f };
+                float randomRot = rotations[Random.Range(0, rotations.Length)];
+                Quaternion shelfRotation = Quaternion.Euler(0, randomRot, 0);
+
+                // 회전값에 따라 가로세로 스왑
+                if (Mathf.Approximately(randomRot, 90f))
+                {
+                    halfExtents = new Vector3(halfExtents.z, halfExtents.y, halfExtents.x);
+                }
+
+                // 해당 프리팹 고유의 크기로 주변을 검사합니다.
+                bool isOverlap = Physics.CheckBox(spawnPos, halfExtents, shelfRotation, obstructionLayer);
+
+                if (!isOverlap)
+                {
+                    GameObject newShelf = Instantiate(selectedPrefab, spawnPos, shelfRotation);
+                    newShelf.layer = LayerMask.NameToLayer("Shelf");
+                    currentShelves.Add(newShelf);
+                }
             }
         }
 
-        Debug.Log($"🛒 마트 진열대 {currentShelves.Count}개 재배치 완료!");
+        Debug.Log($"🛒 제각각 크기 대응 자동 배치 완료! (총 {currentShelves.Count}개)");
     }
 
-    // 에디터 뷰에서 배치 영역을 미리 보기 위한 기능
+    // 💡 [추가] 에디터 뷰에서 배치될 자리를 실시간으로 시각화해주는 코드
     private void OnDrawGizmos()
     {
-        if (gridPoints == null) return;
-        Gizmos.color = Color.green;
-        foreach (var pt in gridPoints)
+        // 프리팹 배열이 비어있으면 그리지 않음
+        if (shelfPrefabs == null || shelfPrefabs.Length == 0) return;
+
+        Vector3 startPosition = GetGridStartPosition();
+
+        // 격자 포인트를 순회하며 박스를 그립니다.
+        for (int x = 0; x < columns; x++)
         {
-            if (pt != null) Gizmos.DrawWireCube(pt.position, new Vector3(0.5f, 0.5f, 0.5f));
+            for (int z = 0; z < rows; z++)
+            {
+                Vector3 pt = startPosition + new Vector3(x * gridSpacing.x, 0f, z * gridSpacing.y);
+
+                // 순서대로 프리팹들의 크기를 매칭해서 보여줍니다 (비율 확인용)
+                int prefabIndex = (x * rows + z) % shelfPrefabs.Length;
+                GameObject prefab = shelfPrefabs[prefabIndex];
+
+                if (prefab != null)
+                {
+                    BoxCollider col = prefab.GetComponent<BoxCollider>();
+                    if (col != null)
+                    {
+                        // 실제 프리팹 크기 계산
+                        Vector3 actualSize = Vector3.Scale(col.size, prefab.transform.localScale);
+
+                        // 🟢 초록색 선으로 배치될 진열대 크기 영역 표시
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawWireCube(pt + col.center, actualSize);
+                    }
+                }
+
+                // 🔵 노란색 점으로 격자의 중심점(스폰 포인트 위치) 표시
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(pt, 0.2f);
+            }
         }
+    }
+
+    // 코드 중복을 줄이기 위한 격자 시작점 계산 함수
+    private Vector3 GetGridStartPosition()
+    {
+        return transform.position - new Vector3(
+            (columns - 1) * gridSpacing.x * 0.5f,
+            0f,
+            (rows - 1) * gridSpacing.y * 0.5f
+        );
+    }
+
+    // 프리팹의 스케일이 반영된 겹침 체크용 halfExtents 계산 함수
+    private Vector3 GetPrefabHalfExtents(GameObject prefab, BoxCollider col)
+    {
+        Vector3 actualSize = Vector3.Scale(col.size, prefab.transform.localScale);
+        return actualSize * 0.5f;
     }
 }

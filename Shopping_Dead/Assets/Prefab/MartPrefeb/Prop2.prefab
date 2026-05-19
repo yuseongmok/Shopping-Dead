@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 801520380758714545}
   - component: {fileID: 7870513397963173787}
   - component: {fileID: 2481602566511007485}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 7981421679308803578}
   - component: {fileID: 7487832651418677594}
   - component: {fileID: 4500409016683807297}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 3872115459741560291}
   - component: {fileID: 6370450043528230533}
   - component: {fileID: 3355677002593545456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 5504595690217475684}
   - component: {fileID: 7010425347983599212}
   - component: {fileID: 6951921231723880898}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 6098841696384084675}
   - component: {fileID: 1008564670943070790}
   - component: {fileID: 5764573137438805495}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 8447106666183353307}
   - component: {fileID: 4781312810844055766}
   - component: {fileID: 7370803172739596999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: shelf (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 5574468561910115097}
   - component: {fileID: 4990489064654500169}
   - component: {fileID: 4372368609182500474}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Prop2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

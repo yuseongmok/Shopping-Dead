@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110687352022512419}
   - component: {fileID: 4422339065798109186}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Coner3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 17, y: 1.5, z: 12}
+  m_Size: {x: 17, y: 1.5, z: 13}
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1001 &5807769606256287932
 PrefabInstance:
@@ -70,6 +70,14 @@ PrefabInstance:
     - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_Name
       value: Fruitshelft prefab (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
@@ -172,6 +180,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruitshelft prefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -272,6 +288,14 @@ PrefabInstance:
     - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_Name
       value: Fruitshelft prefab (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
@@ -374,6 +398,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruitshelft prefab (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -475,6 +507,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruitshelft prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -575,6 +615,14 @@ PrefabInstance:
     - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_Name
       value: Fruitshelft prefab (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565968213609400, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572812938137008, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4936053660029288, guid: 4a703ff5dbbc9e64e86bd2ebca2ee353, type: 3}
       propertyPath: m_LocalPosition.x
